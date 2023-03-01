@@ -7,12 +7,21 @@ import { supportsWorkerType } from "../../../lib/shared/util.js"
 async function getWoker(){
   if(supportsWorkerType()){
     console.log('suporta');
-    return;
+    const worker = new Worker('./src/worker.js', { type: 'module'})
+    return worker;
   }
 
-    console.log('não suporta');
-  
+  const workerMock = {
+    async postMessage() {},
+    onmessage(msg) {}
+  }
+
+  console.log('não suporta');
+  return workerMock;
 }
+
+const worker = await getWoker()
+worker.postMessage('hey from factory!!');
 
 const camera = await Camera.init()
 const [rootPath] = window.location.href.split('/pages/')
