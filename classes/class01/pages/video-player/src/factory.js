@@ -21,7 +21,6 @@ async function getWoker(){
 }
 
 const worker = await getWoker()
-worker.postMessage('hey from factory!!');
 
 const camera = await Camera.init()
 const [rootPath] = window.location.href.split('/pages/')
@@ -29,7 +28,8 @@ const factory = {
   async initalize() {
     return Controller.initialize({
       view: new View({}),
-      service: new Service({})
+      service: new Service({}),
+      worker
     })
   }
 }
